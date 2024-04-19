@@ -17,26 +17,11 @@ function searchFines(searchKey) {
     return reTypes.test(searchValue);
   }
 
-  // Функція формує значення з номером як в базі, щоб на початку були "нулі", якщо їх не було введено при пошуку.
-  function correctValue(searchValue) {
-    if (searchValue.length === 1) {
-      return "00" + searchValue;
-    } else if (searchValue.length === 2) {
-      return "0" + searchValue;
-    } else if (searchValue.length === 3) {
-      return searchValue;
-    } else {
-      return searchValue;
-    }
-  }
-
   // Якщо є номер, відбувається спроба знайти такий номер в базі
   if (onlyDigits(searchKey)) {
     // Пошук по номеру штрафа
-    let correctKey = correctValue(searchKey);
-
     for (let row in DB) {
-      if (correctKey === DB[row]["номер"]) {
+      if (DB[row]["номер"].indexOf(searchKey) >= 0) {
         return [
           {номер: DB[row]["номер"], тип: DB[row]["тип"], сума: DB[row]["сума"], дата: DB[row]["дата"]},
         ];
